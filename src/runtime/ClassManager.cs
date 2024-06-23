@@ -326,7 +326,12 @@ namespace Python.Runtime
 
         internal static bool ShouldBindEvent(EventInfo ei)
         {
-            return ShouldBindMethod(ei.GetAddMethod(true));
+            var mb = ei.GetAddMethod(true);
+            if (mb == null)
+            {
+                return false;
+            }
+            return ShouldBindMethod(mb);
         }
 
         private static ClassInfo GetClassInfo(Type type, ClassBase impl)
